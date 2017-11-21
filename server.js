@@ -4,7 +4,7 @@ port = process.env.PORT || 3333,
 mongoose = require('mongoose');
 
 const models = require('./models');
-const logger = require('morgan');
+const logger = require('./utilities/logger');
 const dbConfig = require('./config/db');
 
 mongoose.Promise = global.Promise;
@@ -13,9 +13,9 @@ mongoose.connect(dbConfig.url, {useMongoClient: true});
 const db = mongoose.connection;
 
 db.on('error', err=> {
-    console.error(`Error while connection to DB: ${err.message}`);
+    logger.error(`Error while connection to DB: ${err.message}`);
 });
-db.once('open', ()=> {console.log('DB connected successfully!'); });
+db.once('open', ()=> {logger.info('DB connected successfully!'); });
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -29,7 +29,7 @@ app.use((req, res, next) => {
     }
     next();
 });
-app.use(logger('dev'));
+app.use(require('morgan')({stream: logger.stream}));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 });
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
-  console.log(err.message);
+  logger.error(err.message);
   res.json({
     status: 1,
     msg: err.message
@@ -50,4 +50,4 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port);
-console.log(' Start started on ' + port);
+logger.info('Start started on ' + port);
