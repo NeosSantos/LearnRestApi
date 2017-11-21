@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://example.com/food.json",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "type": "string",
+      "title": "Food ID",
+      "minLength": 24,
+      "maxLength": 24,
+      "description": "食物编号，由数据库生成。这里使用MongoDb的默认的格式",
+      "examples": [
+        "5a06d37b7424c62dcc295c91"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "title": "Food Name",
+      "minLength": 2,
+      "maxLength": 20,
+      "description": "食品名称",
+      "default": ""
+    },
+    "image": {
+      "type": "string",
+      "title": "Food sample image",
+      "description": "食物样片的图片的服务器路径。（也可以用base64 编码的字符串， 这样不好做缓存）",
+      "default": ""
+    },
+    "introduction": {
+      "type": "string",
+      "title": "Food description",
+      "minLength": 2,
+      "maxLength": 40,
+      "description": "食物的详细描述",
+      "default": ""
+    },
+    "catagory": {
+      "type": "string",
+      "enum": [
+        "Chinese",
+        "Japenese",
+        "Western",
+        "NewStyle",
+        "Package"
+      ],
+      "title": "Food catagory",
+      "description": "食物类别",
+      "default": "Chinese"
+    },
+    "price": {
+      "type": "number",
+      "title": "Food price",
+      "min": 0.00,
+      "max": 99999.99,
+      "description": "食物的原始标价（精确到分）",
+      "default": 0,
+      "examples": [
+        10.00
+      ]
+    },
+    "discount": {
+      "type": "number",
+      "title": "Discount",
+      "min": 0.00,
+      "max": 99999.99,
+      "description": "食物的优惠价格（精确到分）",
+      "default": 0.00,
+      "examples": [
+        10.25
+      ]
+    },
+    "sold": {
+      "type": "integer",
+      "title": "Sold count",
+      "min": 0,
+      "description": "总销量",
+      "default": 0,
+      "examples": [
+        1000
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "image",
+    "catagory",
+    "price"
+  ]
+}

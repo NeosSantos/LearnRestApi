@@ -1,0 +1,44 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "http://example.com/api-response.json",
+    "type": "object",
+    "properties": {
+      "status": {
+        "type": "integer",
+        "title": "Status",
+        "description": "请求状态",
+        "enum": [
+            0/*正常*/,
+            1/*失败*/
+        ]
+      },
+      "msg": {
+        "type": "string",
+        "title": "Additional Message",
+        "description": "请求的额外信息",
+        "default": null
+      },
+      "data": {
+        "type": ["object", "array"],
+        "title": "Response Data",
+        "description": "单独的Object，或者Object数组"
+      },
+      "pageIndex": {
+        "type": "integer",
+        "title": "Page index",
+        "description": "当前页码，当data为数据时为必要项",
+        "default": 0
+      },
+      "pageSize": {
+        "type": "integer",
+        "title": "Page size",
+        "description": "每页面条目数，当data为数据时为必要项",
+        "default": 20
+      },
+      "totalCount": {
+        "type": "integer",
+        "title": "Total count",
+        "description": "总条目数，当data为数据时为必要项"
+      }
+    }
+  }

@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://example.com/order.json",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "type": "string",
+      "title": "Order ID",
+      "minLength": 24,
+      "maxLength": 24,
+      "description": "订单编号，由数据库生成。这里使用MongoDb的默认的格式",
+      "examples": [
+        "5a06d37b7424c62dcc295c91"
+      ]
+    },
+    "orderedBy": {
+      "type":"object", 
+      "title": "Ordered by",
+      "description": "下单人",
+      "$ref": "User"
+    },
+    "orderTime": {
+      "type": "string",
+      "title": "Order Time (datetime ISO8601)",
+      "description": "订单最后修改时间，一旦订单被支付，此项不再改动（这样可以保证超时的订单需要重新检查库存及价格，而不用等到支付时才去检查）",
+      "default": ""
+    },
+    "promisedTime": {
+      "type": "string",
+      "title": "Promised delivery time (datetime ISO8601)",
+      "description": "预订取餐时间",
+      "default": ""
+    },
+    "shippedTime": {
+      "type": "string",
+      "title": "Real delivery time (datetime ISO8601)",
+      "description": "实际送达时间",
+      "default": ""
+    },
+    "pickTime": {
+      "type": "string",
+      "title": "Picked time (datetime ISO8601)",
+      "description": "实际取餐时间",
+      "default": ""
+    },
+    "container": {
+      "type": "object",
+      "title": "Container",
+      "description": "货柜信息",
+      "properties": {
+        "address": {
+          "type": "string",
+          "title": "Container address",
+          "description": "货柜箱地址"
+        },
+        "boxId": {
+          "type": "string",
+          "title": "Box ID",
+          "description": "货柜编号， 此项应在送餐时填写"
+        }
+      }
+    },
+    "foodList": {
+      "type": "array",
+      "title": "Food information",
+      "description": "订单食物清单",
+      "items": {
+        "$ref": "Food"
+      }
+    },
+    "totalPrice": {
+      "type": "number",
+      "title": "Total price",
+      "min": 0.00,
+      "max": 99999.99,
+      "description": "总的原始价格",
+      "default": 0.00,
+      "examples": [
+        10.00
+      ]
+    },
+    "totalDiscount": {
+      "type": "number",
+      "title": "Total discount",
+      "min": 0.00,
+      "max": 99999.99,
+      "description": "总的优惠价格",
+      "default": 0.00,
+      "examples": [
+        10.25
+      ]
+    },
+    "serviceCharge": {
+      "type": "number",
+      "title": "Service charge",
+      "min": 0.00,
+      "max": 999.99,
+      "description": "服务费",
+      "default": 0.00,
+      "examples": [
+        10.25
+      ]
+    },
+    "realPrice": {
+      "type": "number",
+      "title": "Final price need to pay",
+      "description": "实际支付价格：totalPrice - totalDiscount + serviceCharge",
+      "default": 0.00
+    },
+    "state": {
+      "type": "string",
+      "title": "Order State",
+      "enum": [
+        "Shopping",
+        "Paying",
+        "Delivering",
+        "Delivered",
+        "Invalid",
+        "Finished"
+      ],
+      "description": "订单状态"
+    }
+  },
+  "required": [
+    "id",
+    "orderTime",
+    "state"
+  ]
+}

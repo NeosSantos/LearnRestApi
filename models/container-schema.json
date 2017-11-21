@@ -1,0 +1,51 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$id": "http://example.com/container.json",
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "title": "Container ID",
+        "minLength": 24,
+        "maxLength": 24,
+        "description": "货柜编号，由数据库生成。这里使用MongoDb的默认的格式",
+        "examples": [
+          "5a06d37b7424c62dcc295c91"
+        ]
+      },
+      "address": {
+        "type": "string",
+        "title": "Container address",
+        "minLength": 2,
+        "maxLength": 20,
+        "description": "货柜地址",
+        "default": ""
+      },
+      "coordinate": {
+        "type": "array",
+        "minLength": 2,
+        "maxLength": 2,
+        "title": "Container GPS location",
+        "description": "货柜的地理位置（经度，纬度）"
+      },
+      "temperature": {
+        "type": "number",
+        "title": "Container temperature",
+        "min": 12,
+        "max": 14,
+        "description": "货柜箱温度",
+        "default": ""
+      },
+      "boxId": {
+        "type": "string",
+        "title": "Single box ID",
+        "description": "单格箱子的编号"
+      }
+    },
+    "required": [
+      "address",
+      "coordinate",
+      "temperature",
+      "boxId"
+    ]
+  }
