@@ -18,14 +18,12 @@
             "title": "User Name",
             "minLength": 2,
             "maxLength": 20,
-            "description": "用户名称",
-            "default": ""
+            "description": "用户名称"
         },
         "avatar": {
             "type": "string",
             "title": "User avatar",
-            "description": "头像",
-            "default": ""
+            "description": "头像"
         },
         "phone": {
             "type": "string",
@@ -33,7 +31,6 @@
             "minLength": 11,
             "maxLength": 14,
             "description": "用户手机号",
-            "default": "",
             "examples": [
                 "12344556789",
                 "123-4455-6789"

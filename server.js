@@ -17,6 +17,15 @@ db.on('error', err=> {
 });
 db.once('open', ()=> {logger.info('DB connected successfully!'); });
 
+var i18n = require("i18n");
+i18n.configure({
+    locales: ['en', 'zh'],
+    defaultLocale: 'zh',
+    cookie: 'lang',
+    queryParameter: 'lang',
+    directory: __dirname + '/i18n'
+});
+
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header(
@@ -29,9 +38,10 @@ app.use((req, res, next) => {
     }
     next();
 });
-app.use(require('morgan')({stream: logger.stream}));
+app.use(require('morgan')('combined', {stream: logger.stream}));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(i18n.init);
 
 require('./routes/')(app);
 

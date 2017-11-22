@@ -25,7 +25,7 @@ exports.allUsers = (req, res, next) => {
         if(err) return next(err);
         res.json({
             status: 0,
-            msg: 'Succeed',
+            msg: res.__('Succeed'),
             data: users,
             pageIndex: pIndex,
             pageSize: pSize,
@@ -43,7 +43,7 @@ exports.register = (req, res, next) => {
         delete u.avatar;
         res.json({
             status: 0,
-            msg: 'Succeed',
+            msg: res.__('Succeed'),
             data: u
         });
     });
@@ -55,13 +55,13 @@ exports.getUser = (req, res, next) => {
         if(!usr) {
             res.status(404).json({
                 status: 1,
-                msg: 'User not found'
+                msg: res.__('User not found')
             });
             return;
         }
         res.json({
             status: 0,
-            msg: '',
+            msg: res.__('Succeed'),
             data: usr
         });
     });
@@ -73,7 +73,7 @@ exports.updateUser = (req, res, next) => {
         if(!usr) {
             res.status(400).json({
                 status: 1,
-                msg: 'User not found'
+                msg: res.__('User not found')
             });
             return;
         }
@@ -97,7 +97,7 @@ exports.deleteUser = (req, res, next) => {
         if(err) return next(err);
         res.json({ 
             status: 0,
-            msg: 'User successfully deleted.' 
+            msg: res.__('User successfully deleted.')
         });
     });
 };
@@ -108,7 +108,7 @@ exports.getAvatar = (req, res, next) => {
         if(!usr){
             res.status(404).json({
                 status: 1,
-                msg: 'User not found'
+                msg: res.__('User not found')
             });
             return;
         }
@@ -128,14 +128,14 @@ exports.setAvatar = (req, res, next) => {
         if(!usr) {
             res.status(400).json({
                 status: 1,
-                msg: 'User not found'
+                msg: res.__('User not found')
             });
             return;
         }
         if(!req.file) {
             res.status(400).json({
                 status: 1,
-                msg: 'No avatar found in request'
+                msg: res.__('No avatar found in request')
             });
             return;
         }
@@ -166,7 +166,7 @@ exports.getOrders = (req, res, next) => {
         if(err) return next(err);
         res.json({
             status: 0,
-            msg: 'Succeed',
+            msg: res.__('Succeed'),
             data: orders,
             pageIndex: pIndex,
             pageSize: pSize,

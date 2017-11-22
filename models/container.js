@@ -27,12 +27,12 @@ var ContainerSchema = new Schema({
         type: [
             {
                 boxId: {
-                    type: number
+                    type: Number
                 },
                 isEmpty: {
-                    type: boolean,
+                    type: Boolean,
                 },
-                boxSize: [ number ]
+                boxSize: [ Number ]
             }
         ],
         select: false

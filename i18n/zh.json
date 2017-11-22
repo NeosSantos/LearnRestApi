@@ -1,0 +1,11 @@
+{
+    "Container not found": "货柜不存在",
+    "Container successfully deleted.": "货柜已经成功移除。",
+    "Food not found": "食品不存在",
+    "Food successfully deleted.": "货柜已经成功移除。",
+    "Need image for the food": "Need image for the food",
+    "User successfully deleted.": "User successfully deleted.",
+    "User not found":"User not found",
+    "No avatar found in request": "No avatar found in request",
+    "Succeed": "成功"
+}

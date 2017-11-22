@@ -23,7 +23,7 @@ var OrderSchema = new Schema({
     shippedTime: Date,
     pickTime: Date,
     container: { type: Schema.Types.ObjectId, ref: 'Container' },
-    boxId: number, /* see container box id */
+    boxId: Number, /* see container box id */
     foodList: [{ type: Schema.Types.ObjectId, ref: 'Food' }],
     totalPrice: {
         type: Number,

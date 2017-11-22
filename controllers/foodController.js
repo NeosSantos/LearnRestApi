@@ -22,7 +22,7 @@ exports.allFoods = (req, res, next) => {
         if(err) return next(err);
         res.json({
             status: 0,
-            msg: 'Succeed',
+            msg: res.__('Succeed'),
             data: foods,
             pageIndex: pIndex,
             pageSize: pSize,
@@ -37,7 +37,7 @@ exports.newFood = (req, res, next) => {
     if(!req.file) {
         res.status(400).json({
             status: 1,
-            msg: 'Need image for the food'
+            msg: res.__('Need image for the food')
         });
         return;
     }
@@ -48,7 +48,7 @@ exports.newFood = (req, res, next) => {
         delete f.image;
         res.json({
             status: 0,
-            msg: 'Succeed',
+            msg: res.__('Succeed'),
             data: f
         });
     });
@@ -60,13 +60,13 @@ exports.getFood = (req, res, next) => {
         if(!food) {
             res.status(404).json({
                 status: 1,
-                msg: 'Food not found'
+                msg: res.__('Food not found')
             });
             return;
         }
         res.json({
             status: 0,
-            msg: 'Succeed',
+            msg: res.__('Succeed'),
             data: food
         });
     });
@@ -78,7 +78,7 @@ exports.updateFood = (req, res, next) => {
         if(!food) {
             res.status(400).json({
                 status: 1,
-                msg: 'Food not found'
+                msg: res.__('Food not found')
             });
             return;
         }
@@ -87,12 +87,12 @@ exports.updateFood = (req, res, next) => {
         }
         for(var key in req.body) {
             if(req.body.hasOwnproperty()){
-                
+                food[key] = req.body[key];
             }
         }
         res.json({
             status: 0,
-            msg: 'Succeed',
+            msg: res.__('Succeed'),
             data: food
         });
     });
@@ -103,7 +103,7 @@ exports.deleteFood = (req, res, next) => {
         if(err) return next(err);
         res.json({ 
             status: 0,
-            msg: 'Food successfully deleted.'
+            msg: res.__('Food successfully deleted.')
         });
     });
 };
