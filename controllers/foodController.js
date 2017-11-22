@@ -3,18 +3,20 @@
 var mongoose = require('mongoose'),
     Food = mongoose.model('Food');
 
+const logger = require('../utilities/logger');
+
 exports.allFoods = (req, res, next) => {
     var pIndex, pSize;
     try {
         pIndex = parseInt(pIndex || '0');
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         pIndex = 0;
     }
     try {
         pSize = parseInt(pSize || '20');
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         pSize = 20;
     }
     Food.find().skip(pIndex * pSize).limit(pSize)

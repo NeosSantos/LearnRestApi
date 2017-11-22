@@ -4,19 +4,20 @@ var path = require('path');
 var mongoose = require('mongoose'),
     User = mongoose.model('User'),    
     Order = mongoose.model('Order');
+var logger = require('../utilities/logger');
 
 exports.allUsers = (req, res, next) => {
     var pIndex, pSize;
     try {
         pIndex = parseInt(pIndex || '0');
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         pIndex = 0;
     }
     try {
         pSize = parseInt(pSize || '20');
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         pSize = 20;
     }
     
@@ -146,6 +147,7 @@ exports.setAvatar = (req, res, next) => {
         });
     });
 };
+
 exports.getOrders = (req, res, next) => {
     var pIndex, pSize;
     try {

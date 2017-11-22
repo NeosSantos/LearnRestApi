@@ -45,25 +45,8 @@ exports.newContainer = (req, res, next) => {
 };
 
 exports.getContainer = (req, res, next) => {
-    Container.findById(req.params.containerId, (err, container) => {
-        if(err) return next(err);
-        if(!container) {
-            res.status(404).json({
-                status: 1,
-                msg: res.__('Container not found')
-            });
-            return;
-        }
-        res.json({
-            status: 0,
-            msg: res.__('Succeed'),
-            data: container
-        });
-    });
-};
-
-exports.getBoxes = (req, res, next) => {
-    Container.findById(req.params.containerId, '+boxes', (err, container) => {
+    var projection = (req.query.boxes === 'true'? '+': '-') + 'boxes'
+    Container.findById(req.params.containerId, projection, (err, container) => {
         if(err) return next(err);
         if(!container) {
             res.status(404).json({

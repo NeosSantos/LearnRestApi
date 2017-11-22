@@ -7,6 +7,5 @@ module.exports = function(app) {
 
     app.route('/admin/orders/:orderId')
         .get(orderCtrl.getOrder)
-        .put(orderCtrl.updateOrder)
         .delete(orderCtrl.deleteOrder);
 };
