@@ -6,6 +6,10 @@ var Schema = mongoose.Schema;
 var serialize = require('./shared').serialize;
 
 var ContainerSchema = new Schema({
+    eid: {
+        type: Number,
+        required: true
+    },
     address: {
         type: String,
         required: true,
@@ -19,10 +23,19 @@ var ContainerSchema = new Schema({
         min: -10,
         max: 100
     },
-    boxId: {
-        type: String,
-        minlength: 12,
-        maxlength: 15
+    boxes: {
+        type: [
+            {
+                boxId: {
+                    type: number
+                },
+                isEmpty: {
+                    type: boolean,
+                },
+                boxSize: [ number ]
+            }
+        ],
+        select: false
     }
 }, serialize);
 

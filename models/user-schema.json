@@ -45,8 +45,7 @@
             "description": "食物类别",
             "item": {
                 "$ref": "Order"
-            },
-            "default": "Chinese"
+            }
         }
     },
     "required": [

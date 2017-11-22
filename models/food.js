@@ -56,12 +56,21 @@ var FoodSchema = new Schema({
         type: Number,
         min: 1,
         max: 5,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value'
+        },
+        default: 1,
         required: true
     },
-    saled: {
+    sales: {
         type: Number,
         required: true,
-        min: 0
+        min: 0,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value'
+        }
     }
 }, serialize)
 module.exports = mongoose.model('Food', FoodSchema);

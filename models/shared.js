@@ -6,7 +6,9 @@ var Schema = mongoose.Schema;
 exports.ImageSchema = new Schema({
     stream: Buffer,
     mime: String
-}, {id: false});
+}, {
+    id: false
+});
 
 exports.serialize = {
     toObject: { getters: true, virtuals: false, versionKey: false },

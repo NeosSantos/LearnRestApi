@@ -111,12 +111,8 @@
       "type": "string",
       "title": "Order State",
       "enum": [
-        "Shopping",
-        "Paying",
         "Delivering",
-        "Delivered",
-        "Invalid",
-        "Finished"
+        "Delivered"
       ],
       "description": "订单状态"
     }

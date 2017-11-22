@@ -18,22 +18,19 @@
       "title": "Food Name",
       "minLength": 2,
       "maxLength": 20,
-      "description": "食品名称",
-      "default": ""
+      "description": "食品名称"
     },
     "image": {
       "type": "string",
       "title": "Food sample image",
-      "description": "食物样片的图片的服务器路径。（也可以用base64 编码的字符串， 这样不好做缓存）",
-      "default": ""
+      "description": "食物样片的图片的服务器路径。（也可以用base64 编码的字符串， 这样不好做缓存）"
     },
     "introduction": {
       "type": "string",
       "title": "Food description",
       "minLength": 2,
       "maxLength": 40,
-      "description": "食物的详细描述",
-      "default": ""
+      "description": "食物的详细描述"
     },
     "catagory": {
       "type": "string",
@@ -41,8 +38,7 @@
         "Chinese",
         "Japenese",
         "Western",
-        "NewStyle",
-        "Package"
+        "NewStyle"
       ],
       "title": "Food catagory",
       "description": "食物类别",
@@ -70,7 +66,22 @@
         10.25
       ]
     },
-    "sold": {
+    "evaluation": {
+      "type": "number",
+      "title": "Evaluation",
+      "min": 1,
+      "max": 5,
+      "description": "食物的评分",
+      "default": 1
+    },
+    "stock": {
+      "type": "number",
+      "title": "Stock",
+      "min": 0,
+      "description": "食物的库存",
+      "default": 0
+    },
+    "sales": {
       "type": "integer",
       "title": "Sold count",
       "min": 0,
