@@ -5,10 +5,10 @@ mongoose = require('mongoose');
 
 const models = require('./models');
 const logger = require('./utilities/logger');
-const dbConfig = require('./config/db');
+const settings = require('./config/config');
 
 mongoose.Promise = global.Promise;
-mongoose.connect(dbConfig.url, {useMongoClient: true});
+mongoose.connect(settings.dbUrl, {useMongoClient: true});
 
 const db = mongoose.connection;
 
