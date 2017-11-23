@@ -1,13 +1,12 @@
 var winston = require('winston');
 var settings = require('../config/config');
 
-var logger = new winston.createLogger({
+const logger = winston.createLogger({
     level: 'info',
     format: winston.format.json(),
     transports: [
         new winston.transports.File({
-            level: 'info',
-            filename: settings.logFolder + '/all-logs.log',
+            filename: 'logs/all-logs.log',
             handleExceptions: true,
             json: true,
             maxsize: 5242880, //5MB

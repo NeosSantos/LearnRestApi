@@ -115,7 +115,7 @@ exports.getAvatar = (req, res, next) => {
         }
         if(!usr.avatar) {
             res.contentType('image/png');
-            res.sendFile(path.resolve(__dirname + '/../asserts/user.png'));
+            res.sendFile(path.resolve(__dirname + '/../assets/user.png'));
             return;
         }
         res.contentType(usr.avatar.mime);
