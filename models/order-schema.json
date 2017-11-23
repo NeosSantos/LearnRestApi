@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "http://example.com/order.json",
+  "$id": "https://www.tripleseed.top/schemas/order-schema.json",
   "type": "object",
   "properties": {
     "_id": {
