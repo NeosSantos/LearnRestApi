@@ -2,8 +2,7 @@
 module.exports = function(app) {
     var orderCtrl = require('../controllers/orderController');
     app.route('/admin/orders')
-        .get(orderCtrl.allOrders)
-        .post(orderCtrl.newOrder);
+        .get(orderCtrl.allOrders);
 
     app.route('/admin/orders/:orderId')
         .get(orderCtrl.getOrder)

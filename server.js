@@ -25,6 +25,17 @@ i18n.configure({
     queryParameter: 'lang',
     directory: __dirname + '/i18n'
 });
+var passport = require('passport');
+var Strategy = require('passport-http').BasicStrategy;
+const USERNAME = 'admin';
+const PASSWORD = 'uchen'
+passport.use(new Strategy( function(_username, _password, cb){
+    if(_username === USERNAME && _password === PASSWORD) {
+        cb(null, {name: USERNAME});
+    }else {
+        cb(null, false);
+    }
+}));
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -42,7 +53,7 @@ app.use(require('morgan')('combined', {stream: logger.stream}));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(i18n.init);
-
+app.use('/admin', passport.authenticate('basic', { session: false }));
 require('./routes/')(app);
 
 app.use((req, res, next) => {

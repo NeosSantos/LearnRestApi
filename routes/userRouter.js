@@ -6,8 +6,12 @@ var upload = multer({ storage: storage });
 module.exports = function(app) {
     var userCtrl = require('../controllers/userController');
     var orderCtrl = require('../controllers/orderController');
+    app.route('/admin/users')
+        .get(userCtrl.allUsers);
+    app.route('/admin/users/:userId')
+        .delete(userCtrl.deleteUser);
+        
     app.route('/users')
-        .get(userCtrl.allUsers)
         .post(upload.single('avatar'), userCtrl.register);
 
     app.route('/users/:userId')
