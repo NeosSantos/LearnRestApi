@@ -57,7 +57,10 @@ exports.newFood = (req, res, next) => {
 };
 
 exports.getFood = (req, res, next) => {
-    Food.findById(req.params.foodId, (err, food) => {
+    const needImg = req.query.image === 'true';
+    var prop = (needImg ? '+':'-') + 'image';
+
+    Food.findById(req.params.foodId, prop, (err, food) => {
         if(err) return next(err);
         if(!food) {
             res.status(404).json({
@@ -66,14 +69,34 @@ exports.getFood = (req, res, next) => {
             });
             return;
         }
+        var _food = food.toJSON();
+        if(needImg) {
+            var base64 = new Buffer(food.image.stream, 'binary').toString('base64');
+            var dataURI = 'data:' + food.image.mime + ';base64,' + base64;
+            _food.image = dataURI;
+        }
         res.json({
             status: 0,
             msg: res.__('Succeed'),
-            data: food
+            data: _food
         });
     });
 };
 
+exports.getFoodImage = (req, res, next) => {
+    Food.findById(req.params.foodId, 'image', (err, food) => {
+        if(err) return next(err);
+        if(!food) {
+            res.status(404).json({
+                status: 1,
+                msg: res.__('Food not found')
+            });
+            return;
+        }
+        res.contentType(food.image.mime);
+        res.end(food.image.stream);
+    });
+};
 exports.updateFood = (req, res, next) => {
     Food.findById({_id: req.params.foodId}, (err, food) => {
         if(err) return next(err);

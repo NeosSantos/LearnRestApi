@@ -9,5 +9,8 @@
 	"No avatar found in request": "请上传用户头像",
 	"Succeed": "成功",
 	"Order not found": "订单不存在",
-	"Order successfully deleted.": "订单已经成功移除"
+	"Order successfully deleted.": "订单已经成功移除",
+	"User validation failed": "用户信息不合法",
+	"{VALUE} is not a valid phone number!": "{VALUE} 不是合法的手机号码!",
+	"Username should be at least 2 charaters.": "用户名至少需要包含2个字符"
 }

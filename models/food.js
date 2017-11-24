@@ -38,7 +38,8 @@ var FoodSchema = new Schema({
         validate: {
             validator: function() {
                 return this.discount <= this.price;
-            }
+            },
+            message: 'Discount should be less than price'
         },
         default: 0
     },
@@ -65,7 +66,6 @@ var FoodSchema = new Schema({
     },
     sales: {
         type: Number,
-        required: true,
         min: 0,
         validate: {
             validator: Number.isInteger,

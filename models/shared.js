@@ -7,10 +7,10 @@ exports.ImageSchema = new Schema({
     stream: Buffer,
     mime: String
 }, {
-    id: false
+    _id: false
 });
 
 exports.serialize = {
-    toObject: { getters: true, virtuals: false, versionKey: false },
-    toJSON: { getters: true, virtuals: false, versionKey: false },
+    toObject: { getters: true, virtuals: true, versionKey: false },
+    toJSON: { getters: true, virtuals: true, versionKey: false },
 };

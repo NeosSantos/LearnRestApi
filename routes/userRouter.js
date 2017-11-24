@@ -1,4 +1,5 @@
 'use strict';
+var cache = require('apicache').middleware;
 var multer = require('multer');
 var storage = multer.memoryStorage();
 var upload = multer({ storage: storage });
@@ -20,7 +21,7 @@ module.exports = function(app) {
         .delete(userCtrl.deleteUser);
 
     app.route('/users/:userId/avatar')
-        .get(userCtrl.getAvatar)
+        .get(cache('5 minutes'), userCtrl.getAvatar)
         .put(upload.single('avatar'), userCtrl.setAvatar);
 
     app.route('/users/:userId/orders')

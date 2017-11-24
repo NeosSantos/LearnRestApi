@@ -37,7 +37,10 @@ exports.allUsers = (req, res, next) => {
 
 exports.register = (req, res, next) => {
     var user = new User(req.body);
-    user.avatar = { stream: req.file.buffer, mime: req.file.mimetype };
+    if(req.file) {
+        user.avatar = { stream: req.file.buffer, mime: req.file.mimetype };
+    }
+    
     user.save((err, usr) => {
         if(err) return next(err);
         var u = usr.toObject();
@@ -51,6 +54,9 @@ exports.register = (req, res, next) => {
 };
 
 exports.getUser = (req, res, next) => {
+    const needImg = req.query.avatar === 'true';
+    var prop = (needImg ? '+':'-') + 'avatar';
+
     User.findById(req.params.userId, (err, usr) => {
         if(err) return next(err);
         if(!usr) {
@@ -60,10 +66,17 @@ exports.getUser = (req, res, next) => {
             });
             return;
         }
+        
+        var _usr = usr.toObject();
+        if(needImg) {
+            var base64 = new Buffer(usr.avatar.stream, 'binary').toString('base64');
+            var dataURI = 'data:' + usr.avatar.mime + ';base64,' + base64;
+            _usr.avatar = dataURI;
+        }
         res.json({
             status: 0,
             msg: res.__('Succeed'),
-            data: usr
+            data: _usr
         });
     });
 };
@@ -104,7 +117,7 @@ exports.deleteUser = (req, res, next) => {
 };
 
 exports.getAvatar = (req, res, next) => {
-    User.findById(req.params.userId, '+avatar', (err, usr) => {
+    User.findById(req.params.userId, 'avatar', (err, usr) => {
         if(err) return next(err);
         if(!usr){
             res.status(404).json({

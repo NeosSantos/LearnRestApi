@@ -53,17 +53,19 @@ app.use(require('morgan')('combined', {stream: logger.stream}));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(i18n.init);
-app.use('/admin', passport.authenticate('basic', { session: false }));
+//app.use('/admin', passport.authenticate('basic', { session: false }));
 require('./routes/')(app);
 
+app.use(require('compression')({ threshold: '128kb' }))
 app.use((req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
+app.use(require('./utilities/errHandler').dbErrHandler);
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
-  logger.error(err.message);
+  logger.error(err);
   res.json({
     status: 1,
     msg: err.message

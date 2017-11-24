@@ -9,16 +9,14 @@ var serialize = require('./shared').serialize;
 var UserSchema = new Schema({
     name: {
         type: String,
-        minlength: 2,
-        maxlength: 30,
-        required: true,
-        unique: true,
+        minlength: [2, 'Username should be at least 2 charaters.'],
+        maxlength: [30, 'Username should be at most 30 charaters.'],
+        required: [true, 'Username cannot be blank.'],
+        unique: [true, 'Username is taken'],
     },
     phone: {
         type: String,
-        minlength: 11,
-        maxlength: 14,
-        unique: true,
+        unique: [true, 'Phone number is used by others.'],
         set: v => v.replace(/[- ]/,''),
         validate: {
             validator: function(v) {
@@ -26,7 +24,7 @@ var UserSchema = new Schema({
             },
             message: '{VALUE} is not a valid phone number!'
         },
-        required: [true, 'User phone number is required!']
+        required: [true, 'Phone number cannot be empty!']
     },
     regDate: {
         type: Date,
