@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var uniqueValidator = require('mongoose-unique-validator');
 
 var ImageSchema = require('./shared').ImageSchema;
 var serialize = require('./shared').serialize;
@@ -12,11 +13,11 @@ var UserSchema = new Schema({
         minlength: [2, 'Username should be at least 2 charaters.'],
         maxlength: [30, 'Username should be at most 30 charaters.'],
         required: [true, 'Username cannot be blank.'],
-        unique: [true, 'Username is taken'],
+        unique: true,
     },
     phone: {
         type: String,
-        unique: [true, 'Phone number is used by others.'],
+        unique: true,
         set: v => v.replace(/[- ]/,''),
         validate: {
             validator: function(v) {
@@ -42,5 +43,7 @@ var UserSchema = new Schema({
         select: false
     }
 }, serialize);
+
+UserSchema.plugin(uniqueValidator, {message: '`{VALUE}` is taken!'});
 
 module.exports = mongoose.model('User', UserSchema);

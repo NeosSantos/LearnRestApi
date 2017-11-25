@@ -2,22 +2,25 @@
 
 var mongoose = require('mongoose'),
 Container = mongoose.model('Container');
+var logger = require('../utilities/logger');
 
 exports.allContainers = (req, res, next) => {
     var pIndex, pSize;
     try {
         pIndex = parseInt(pIndex || '0');
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         pIndex = 0;
     }
     try {
         pSize = parseInt(pSize || '20');
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         pSize = 20;
     }
-    Container.find().skip(pIndex * pSize).limit(pSize)
+    Container.find()
+    .populate('boxes')
+    .skip(pIndex * pSize).limit(pSize)
     .exec((err, containers) => {
         if(err) return next(err);
         res.json({
