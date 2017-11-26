@@ -12,7 +12,7 @@ exports.ImageSchema = new Schema({
 
 exports.BoxSchema = new Schema({
     boxId: {
-        type: Number,
+        type: String,
         requried: true
     },
     isEmpty: {
@@ -23,11 +23,13 @@ exports.BoxSchema = new Schema({
         type: [ Number ],
         required: true,
         validate: {
-            validator: v=> v && v.length === 3,
+            validator: v => v && v.length === 3,
             message: 'Value should be [length, width, height]'
         },
         default: [30,40,50]
     }
+}, {
+    _id: false
 });
 exports.serialize = {
     toObject: { getters: true, virtuals: true, versionKey: false },

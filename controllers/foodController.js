@@ -46,7 +46,7 @@ exports.newFood = (req, res, next) => {
     food.image = { stream: req.file.buffer, mime: req.file.mimetype };
     food.save((err, _food) => {
         if(err) return next(err);
-        var f = food.toObject();
+        var f = _food.toObject();
         delete f.image;
         res.json({
             status: 0,
@@ -69,7 +69,7 @@ exports.getFood = (req, res, next) => {
             });
             return;
         }
-        var _food = food.toJSON();
+        var _food = food.toObject();
         if(needImg) {
             var base64 = new Buffer(food.image.stream, 'binary').toString('base64');
             var dataURI = 'data:' + food.image.mime + ';base64,' + base64;
@@ -111,14 +111,20 @@ exports.updateFood = (req, res, next) => {
             food.image = { stream: req.file.buffer, mime: req.file.mimetype };
         }
         for(var key in req.body) {
-            if(req.body.hasOwnproperty()){
-                food[key] = req.body[key];
-            }
+            food[key] = req.body[key];
         }
-        res.json({
-            status: 0,
-            msg: res.__('Succeed'),
-            data: food
+        food.save((err, food) => {
+            var _food = food.toObject();
+            if(req.file) {
+                var base64 = new Buffer(_food.avatar.stream, 'binary').toString('base64');
+                var dataURI = 'data:' + _food.avatar.mime + ';base64,' + base64;
+                _food.image = dataURI;
+            }
+            res.json({
+                status: 0,
+                msg: res.__('Succeed'),
+                data: _food
+            });
         });
     });
 };

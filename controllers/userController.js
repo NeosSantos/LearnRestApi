@@ -96,9 +96,17 @@ exports.updateUser = (req, res, next) => {
         if(req.file) {
             user.avatar = { stream: req.file.buffer, mime: req.file.mimetype };
         }
-        res.json({
-            status: 1,
-            data: usr
+        usr.save(function(err, usr){
+            var _usr = usr.toObject();
+            if(req.file) {
+                var base64 = new Buffer(usr.avatar.stream, 'binary').toString('base64');
+                var dataURI = 'data:' + usr.avatar.mime + ';base64,' + base64;
+                _usr.avatar = dataURI;
+            }
+            res.json({
+                status: 1,
+                data: usr
+            });
         });
     });
     // User.findOneAndUpdate({_id: req.params.userId}, req.body, {new:true}, (err, usr) => {

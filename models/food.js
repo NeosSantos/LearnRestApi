@@ -30,7 +30,9 @@ var FoodSchema = new Schema({
     price: {
         type: Number,
         required: true,
-        min: 0
+        min: 0,
+        set: v => Math.round(v * 100) / 100,
+        get: v => Math.round(v * 100) / 100
     },
     discount: {
         type: Number,
@@ -41,7 +43,9 @@ var FoodSchema = new Schema({
             },
             message: 'Discount should be less than price'
         },
-        default: 0
+        default: 0,
+        set: v => Math.round(v * 100) / 100,
+        get: v => Math.round(v * 100) / 100
     },
     stock: {
         type: Number,
@@ -51,7 +55,9 @@ var FoodSchema = new Schema({
             validator: Number.isInteger,
             message: '{VALUE} is not an integer value'
         },
-        default: 0
+        default: 0,
+        set: v => Math.round(v),
+        get: v => Math.round(v)
     },
     evaluation: {
         type: Number,
@@ -62,7 +68,9 @@ var FoodSchema = new Schema({
             message: '{VALUE} is not an integer value'
         },
         default: 1,
-        required: true
+        required: true,
+        set: v => Math.round(v),
+        get: v => Math.round(v)
     },
     sales: {
         type: Number,
@@ -70,7 +78,10 @@ var FoodSchema = new Schema({
         validate: {
             validator: Number.isInteger,
             message: '{VALUE} is not an integer value'
-        }
+        },
+        default: 0,
+        set: v => Math.round(v),
+        get: v => Math.round(v)
     }
 }, serialize)
 module.exports = mongoose.model('Food', FoodSchema);

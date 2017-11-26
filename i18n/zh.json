@@ -14,6 +14,7 @@
 	"{VALUE} is not a valid phone number!": "{VALUE} 不是合法的手机号码!",
 	"Username should be at least 2 charaters.": "用户名至少需要包含2个字符",
 	"`{VALUE}` is taken!": "`{VALUE}` 已经被他人注册！",
-	"Container validation failed": "Container validation failed",
-	"{VALUE} is taken!": "{VALUE} is taken!"
+	"Container validation failed": "货柜信息不合法",
+	"Food validation failed": "食品信息不合法",
+	"Discount should be less than price": "折扣价格不应高于销售价格"
 }

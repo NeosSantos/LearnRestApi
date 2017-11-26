@@ -23,7 +23,7 @@ var OrderSchema = new Schema({
     shippedTime: Date,
     pickTime: Date,
     container: { type: Schema.Types.ObjectId, ref: 'Container', select: false },
-    boxId:  Number,
+    boxId:  String,
     foodList: {
         type: [{
             food: { type: Schema.Types.ObjectId, ref: 'Food' },
@@ -31,6 +31,8 @@ var OrderSchema = new Schema({
                 type: Number,
                 required: true,
                 min: 0,
+                set: v => Math.round(v),
+                get: v => Math.round(v),
                 default: 1
             }
         }],
@@ -38,19 +40,31 @@ var OrderSchema = new Schema({
     },
     totalPrice: {
         type: Number,
-        min: 0
+        min: 0,
+        set: v => Math.round(v * 100) / 100,
+        get: v => Math.round(v * 100) / 100,
+        default: 0
     },
     totalDiscount: {
         type: Number,
-        min: 0
+        min: 0,
+        set: v => Math.round(v * 100) / 100,
+        get: v => Math.round(v * 100) / 100,
+        default: 0
     },
     serviceCharge: {
         type: Number,
-        min: 0
+        min: 0,
+        set: v => Math.round(v * 100) / 100,
+        get: v => Math.round(v * 100) / 100,
+        default: 0
     },
     realPrice: {
         type: Number,
         min: 0,
+        set: v => Math.round(v * 100) / 100,
+        get: v => Math.round(v * 100) / 100,
+        default: 0
     },
     state: {
         type: String,
