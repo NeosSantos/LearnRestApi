@@ -1,7 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Order = mongoose.model('Order');
+    Order = mongoose.model('Order'),
+    Container = mongoose.model('Container');
 
 const logger = require('../utilities/logger');
 
@@ -33,17 +34,13 @@ exports.allOrders = (req, res, next) => {
     });
 };
 
-exports.newOrder = (req, res, next) => {
-    var order = new Order(req.body);
-    
-    order.save((err, _order) => {
-        if(err) return next(err);
-        res.json(_order);
-    });
-};
-
 exports.getOrder = (req, res, next) => {
-    Order.findById(req.params.orderId, (err, order) => {
+    Order.findById(req.params.orderId)
+    .populate('orderedBy')
+    .populate('container')
+    .populate('foodList')
+    .populate('foodList.food')
+    .exec((err, order) => {
         if(err) return next(err);
         if(!order) {
             res.status(404).json({

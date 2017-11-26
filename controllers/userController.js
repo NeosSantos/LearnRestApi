@@ -91,6 +91,7 @@ exports.updateUser = (req, res, next) => {
             });
             return;
         }
+        //TODO: which field can be modified?
         usr.phone = req.body.phone;
         if(req.file) {
             user.avatar = { stream: req.file.buffer, mime: req.file.mimetype };
@@ -166,18 +167,23 @@ exports.getOrders = (req, res, next) => {
     try {
         pIndex = parseInt(req.query.pageIndex || '0');
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         pIndex = 0;
     }
     try {
         pSize = parseInt(req.query.pageSize || '20');
     } catch (error) {
-        console.error(error);
+        logger.error(error);
         pSize = 20;
     }
     
-    Order.find({'orderBy._id': req.params.userId}).skip(pIndex * pSize).limit(pSize).populate('foodList')
-    .exec((err, orders) => {
+    User.findById(req.params.userId).populate({
+        path: 'orderList',
+        options: {
+            skip: (pIndex * pSize),
+            limit: pSize
+        }
+    }).exec((err, orders) => {
         if(err) return next(err);
         res.json({
             status: 0,
@@ -186,6 +192,39 @@ exports.getOrders = (req, res, next) => {
             pageIndex: pIndex,
             pageSize: pSize,
             totalCount: orders.length
+        });
+    });
+}
+
+exports.getOrder = (req, res, next) => {
+    Order.findById(req.params.orderId, 'foodList', (err, order) => {
+        if(err) return next(err);
+        if(!order) {
+            res.status(404).json({
+                status: 1,
+                msg: res.__('Order not found')
+            });
+            return;
+        }
+        res.json({
+            status: 0,
+            msg: res.__('Succeed'),
+            data: order
+        });
+    });
+};
+
+exports.makeOrder = (req, res, next) => {
+    var order = new Order(req.body);
+    order.orderedBy = req.params.userId;
+    //TODO: check food stock
+
+    order.save((err, _order) => {
+        if(err) return next(err);
+        res.json({
+            status: 0,
+            msg: res.__('Succeed'),
+            data: _order
         });
     });
 }

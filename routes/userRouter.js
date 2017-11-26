@@ -26,7 +26,7 @@ module.exports = function(app) {
 
     app.route('/users/:userId/orders')
         .get(userCtrl.getOrders)
-        .post(orderCtrl.newOrder);
+        .post(userCtrl.makeOrder);
     app.route('/users/:userId/orders/:orderId')
-        .get(orderCtrl.getOrder);
+        .get(userCtrl.getOrder);
 };

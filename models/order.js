@@ -22,9 +22,20 @@ var OrderSchema = new Schema({
     },
     shippedTime: Date,
     pickTime: Date,
-    container: { type: Schema.Types.ObjectId, ref: 'Container' },
-    boxId: Number, /* see container box id */
-    foodList: [{ type: Schema.Types.ObjectId, ref: 'Food' }],
+    container: { type: Schema.Types.ObjectId, ref: 'Container', select: false },
+    boxId:  Number,
+    foodList: {
+        type: [{
+            food: { type: Schema.Types.ObjectId, ref: 'Food' },
+            count: {
+                type: Number,
+                required: true,
+                min: 0,
+                default: 1
+            }
+        }],
+        select: false
+    },
     totalPrice: {
         type: Number,
         min: 0
@@ -43,8 +54,11 @@ var OrderSchema = new Schema({
     },
     state: {
         type: String,
-        enum: ['Delivering', 'Delivered']
+        enum: ['Shopping', 'Delivering', 'Delivered']
     }
 }, serialize);
 
+OrderSchema.virtual('containerAddress').get(function(){
+    return this.container && this.container.address;
+});
 module.exports = mongoose.model('Order', OrderSchema);

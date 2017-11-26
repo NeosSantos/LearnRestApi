@@ -6,8 +6,7 @@ const ValidatorError  = mongoose.Error.ValidatorError;
 
 function formatError(template, values) {
     Object.keys(values).forEach(key => {
-        if(typeof values[key] === 'string')
-            template = template.replace(new RegExp(`\{${key.toUpperCase()}\}`, 'gm'), values[key]);
+        template = template.replace(new RegExp(`\{${key.toUpperCase()}\}`, 'gm'), values[key]);
     });
     return template;
 }

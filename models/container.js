@@ -2,33 +2,16 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var BoxSchema = require('./shared').BoxSchema;
 
 var serialize = require('./shared').serialize;
-
-var BoxSchema = new Schema({
-    boxId: {
-        type: Number,
-        requried: true
-    },
-    isEmpty: {
-        type: Boolean,
-        default: false
-    },
-    boxSize: {
-        type: [ Number ],
-        required: true,
-        validate: {
-            validator: v=> v && v.length === 3,
-            message: 'Value should be [length, width, height]'
-        },
-        default: [30,40,50]
-    }
-}, {_id: false});
+var uniqueValidator = require('mongoose-unique-validator');
 
 var ContainerSchema = new Schema({
     eid: {
         type: Number,
-        required: true
+        required: true,
+        unique: true
     },
     address: {
         type: String,
@@ -42,7 +25,7 @@ var ContainerSchema = new Schema({
         type: Number,
         min: -10,
         max: 100,
-        default: 20
+        default: 10
     },
     boxes: {
         type: [BoxSchema],
@@ -50,4 +33,5 @@ var ContainerSchema = new Schema({
     }
 }, serialize);
 
+ContainerSchema.plugin(uniqueValidator, {message: '`{VALUE}` is taken!'});
 module.exports = mongoose.model('Container', ContainerSchema);
