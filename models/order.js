@@ -26,7 +26,7 @@ var OrderSchema = new Schema({
     boxId:  String,
     foodList: {
         type: [{
-            food: { type: Schema.Types.ObjectId, ref: 'Food' },
+            food: { type: Schema.Types.ObjectId, ref: 'Food' }, //TODO: should clone the food objects as the price may be changed
             count: {
                 type: Number,
                 required: true,

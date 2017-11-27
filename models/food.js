@@ -30,18 +30,18 @@ var FoodSchema = new Schema({
     price: {
         type: Number,
         required: true,
-        min: 0,
+        min: [0, "Price ({VALUE}) ({VALUE}) should be greater than 0."],
         set: v => Math.round(v * 100) / 100,
         get: v => Math.round(v * 100) / 100
     },
     discount: {
         type: Number,
-        min: 0,
+        min: [0, "Discount ({VALUE}) should be greater than 0."],
         validate: {
             validator: function() {
                 return this.discount <= this.price;
             },
-            message: 'Discount should be less than price'
+            message: 'Discount ({VALUE}) should be less than price'
         },
         default: 0,
         set: v => Math.round(v * 100) / 100,
@@ -50,23 +50,15 @@ var FoodSchema = new Schema({
     stock: {
         type: Number,
         required: true,
-        min: 0,
-        validate: {
-            validator: Number.isInteger,
-            message: '{VALUE} is not an integer value'
-        },
+        min: [0, "Stock ({VALUE}) should be greater than 0."],
         default: 0,
         set: v => Math.round(v),
         get: v => Math.round(v)
     },
-    evaluation: {
+    rate: {
         type: Number,
-        min: 1,
-        max: 5,
-        validate: {
-            validator: Number.isInteger,
-            message: '{VALUE} is not an integer value'
-        },
+        min: [1, "Rate ({VALUE}) should be greater than 1."],
+        max: [5, "Rate ({VALUE}) should be less than 5."],
         default: 1,
         required: true,
         set: v => Math.round(v),
@@ -74,11 +66,7 @@ var FoodSchema = new Schema({
     },
     sales: {
         type: Number,
-        min: 0,
-        validate: {
-            validator: Number.isInteger,
-            message: '{VALUE} is not an integer value'
-        },
+        min: [0, "Sales ({VALUE}) should be greater than 0."],
         default: 0,
         set: v => Math.round(v),
         get: v => Math.round(v)
