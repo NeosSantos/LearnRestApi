@@ -1,8 +1,8 @@
 'use strict';
-var multer = require('multer');
+const multer = require('multer');
 
 module.exports = function(app) {
-    var containerCtrl = require('../controllers/containerController');
+    const containerCtrl = require('../controllers/containerController');
     app.route('/admin/containers')
         .post(containerCtrl.newContainer);
     app.route('/admin/containers/:containerId')

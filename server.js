@@ -2,6 +2,7 @@ var express = require('express'),
 app = express(),
 port = process.env.PORT || 3333,
 mongoose = require('mongoose');
+//mongoose.set('debug', true);
 
 const models = require('./models');
 const logger = require('./utilities/logger');
@@ -53,7 +54,12 @@ app.use(require('morgan')('combined', {stream: logger.stream}));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(i18n.init);
+
 //app.use('/admin', passport.authenticate('basic', { session: false }));
+app.use(/^\/(?!admin)\w+/, function(req, res, next){
+    //TODO: validate user.
+    next();
+});
 require('./routes/')(app);
 
 app.use(require('compression')({ threshold: '128kb' }))

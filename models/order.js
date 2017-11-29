@@ -3,7 +3,23 @@
 var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
+const FoodBase = require('./food').FoodBase;
 var serialize = require('./shared').serialize;
+
+var FoodInOrder = Object.assign({
+    count: {
+        type: Number,
+        required: true,
+        min: 1,
+        set: v => Math.round(v),
+        get: v => Math.round(v),
+        default: 1
+    }, 
+    original: {
+        type: Schema.Types.ObjectId,
+        required: true
+    }
+}, FoodBase);
 
 var OrderSchema = new Schema({
     orderedBy: {
@@ -18,24 +34,18 @@ var OrderSchema = new Schema({
     },
     promisedTime: {
         type: Date,
-        required: true
+        required: true,
+        validate: {
+            validator: function(value) { return value > this.orderTime; },
+            message: 'Promised pcikup time should after order time'
+        }
     },
     shippedTime: Date,
     pickTime: Date,
     container: { type: Schema.Types.ObjectId, ref: 'Container', select: false },
     boxId:  String,
     foodList: {
-        type: [{
-            food: { type: Schema.Types.ObjectId, ref: 'Food' }, //TODO: should clone the food objects as the price may be changed
-            count: {
-                type: Number,
-                required: true,
-                min: 0,
-                set: v => Math.round(v),
-                get: v => Math.round(v),
-                default: 1
-            }
-        }],
+        type: [FoodInOrder],
         select: false
     },
     totalPrice: {

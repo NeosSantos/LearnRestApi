@@ -1,12 +1,11 @@
 'use strict';
-var cache = require('apicache').middleware;
-var multer = require('multer');
-var storage = multer.memoryStorage();
-var upload = multer({ storage: storage });
+const cache = require('apicache').middleware;
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 module.exports = function(app) {
-    var userCtrl = require('../controllers/userController');
-    var orderCtrl = require('../controllers/orderController');
+    const userCtrl = require('../controllers/userController');
     app.route('/admin/users')
         .get(userCtrl.allUsers);
     app.route('/admin/users/:userId')

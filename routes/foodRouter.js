@@ -1,12 +1,12 @@
 'use strict';
-var cache = require('apicache').middleware;
+const cache = require('apicache').middleware;
 
-var multer = require('multer');
-var storage = multer.memoryStorage();
-var upload = multer({ storage: storage });
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 module.exports = function(app) {
-    var foodCtrl = require('../controllers/foodController');
+    const foodCtrl = require('../controllers/foodController');
     app.route('/admin/foods')
         .post(upload.single('image'), foodCtrl.newFood);
     app.route('/admin/foods/:foodId')

@@ -22,5 +22,9 @@
 	"Rate ({VALUE}) should be less than 5.": "评价 ({VALUE}) 应该不高于5星。",
 	"Rate ({VALUE}) should be greater than 1.": "评价 ({VALUE}) 应该不低于1星。",
 	"`{VALUE}` is not a valid enum value for path `{PATH}`.": "`{VALUE}` 不是合法的枚举类型.",
-	"Value should be [length, width, height]": "请指定长、宽、高。"
+	"Value should be [length, width, height]": "请指定长、宽、高。",
+	"Order validation failed": "Order validation failed",
+	"Promised pcikup time should after order time": "Promised pcikup time should after order time",
+	"Path `{PATH}` is required.": "Path `{PATH}` is required.",
+	"Discount ({VALUE}) should be less than price": "Discount ({VALUE}) should be less than price"
 }

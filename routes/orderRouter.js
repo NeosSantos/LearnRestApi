@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function(app) {
-    var orderCtrl = require('../controllers/orderController');
+    const orderCtrl = require('../controllers/orderController');
     app.route('/admin/orders')
         .get(orderCtrl.allOrders);
 

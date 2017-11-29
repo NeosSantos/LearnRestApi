@@ -6,7 +6,13 @@ var Schema = mongoose.Schema;
 var ImageSchema = require('./shared').ImageSchema;
 var serialize = require('./shared').serialize;
 
-var FoodSchema = new Schema({
+var options = Object.assign({
+    timestamps: {
+        updatedAt : 'lastUpdated'
+    }
+}, serialize);
+
+var FoodBase = {
     name: {
         type: String,
         required: true,
@@ -47,20 +53,23 @@ var FoodSchema = new Schema({
         set: v => Math.round(v * 100) / 100,
         get: v => Math.round(v * 100) / 100
     },
-    stock: {
-        type: Number,
-        required: true,
-        min: [0, "Stock ({VALUE}) should be greater than 0."],
-        default: 0,
-        set: v => Math.round(v),
-        get: v => Math.round(v)
-    },
     rate: {
         type: Number,
         min: [1, "Rate ({VALUE}) should be greater than 1."],
         max: [5, "Rate ({VALUE}) should be less than 5."],
         default: 1,
         required: true,
+        set: v => Math.round(v),
+        get: v => Math.round(v)
+    }
+};
+
+var FoodSchema = new Schema(Object.assign({
+    stock: {
+        type: Number,
+        required: true,
+        min: [0, "Stock ({VALUE}) should be greater than 0."],
+        default: 0,
         set: v => Math.round(v),
         get: v => Math.round(v)
     },
@@ -71,5 +80,6 @@ var FoodSchema = new Schema({
         set: v => Math.round(v),
         get: v => Math.round(v)
     }
-}, serialize)
-module.exports = mongoose.model('Food', FoodSchema);
+}, FoodBase), options)
+module.exports.Food = mongoose.model('Food', FoodSchema);
+module.exports.FoodBase = FoodBase;
