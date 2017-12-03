@@ -13,7 +13,5 @@ module.exports = function(app) {
         .get(containerCtrl.allContainers);
 
     app.route('/containers/:containerId')
-        .get(containerCtrl.getContainer)
-        .put(containerCtrl.updateContainer)
-        .delete(containerCtrl.deleteContainer);
+        .get(containerCtrl.getContainer);
 };
