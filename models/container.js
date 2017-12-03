@@ -30,7 +30,8 @@ var ContainerSchema = new Schema({
     boxes: {
         type: [BoxSchema],
         select: false
-    }
+    },
+    isFull: Boolean
 }, serialize);
 
 ContainerSchema.plugin(uniqueValidator, {message: '`{VALUE}` is taken!'});

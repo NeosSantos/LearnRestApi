@@ -74,7 +74,7 @@
             "type": "array",
             "maxItems": 3,
             "minItems": 3,
-            "title": "Box Size",
+            "title": "Box Physical Size(cm)",
             "description": "单元格的长、宽、高",
             "items": {
               "type": "integer"
@@ -89,6 +89,12 @@
           }
         }
       }
+    },
+    "isFull": {
+      "type": "boolean",
+      "title": "Is container full?",
+      "description": "货柜是否已满",
+      "default": false
     }
   },
   "required": [

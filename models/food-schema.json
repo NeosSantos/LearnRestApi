@@ -36,7 +36,7 @@
       "type": "string",
       "enum": [
         "Chinese",
-        "Japenese",
+        "Japanese",
         "Western",
         "NewStyle"
       ],

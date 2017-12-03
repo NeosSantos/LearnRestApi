@@ -31,7 +31,7 @@ var FoodBase = {
     catagory: {
         type: String,
         required: true,
-        enum: ['Chinese', 'Western', 'Japenese', 'NewStyle']
+        enum: ['Chinese', 'Western', 'Japanese', 'NewStyle']
     },
     price: {
         type: Number,
