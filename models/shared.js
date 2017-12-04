@@ -15,10 +15,6 @@ exports.BoxSchema = new Schema({
         type: String,
         requried: true
     },
-    isEmpty: {
-        type: Boolean,
-        default: false
-    },
     boxSize: {
         type: [ Number ],
         required: true,
@@ -27,6 +23,15 @@ exports.BoxSchema = new Schema({
             message: 'Value should be [length, width, height]'
         },
         default: [30,40,50]
+    },
+    booked: { //at which time does the box ordered.
+        type: [Boolean],
+        required: true,
+        validate: {
+            validator: v => v && v.length === 2,
+            message: 'Value should be [tomorrow, 2dayslater]'
+        },
+        default: [false, false]
     }
 }, {
     _id: false

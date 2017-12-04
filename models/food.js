@@ -36,7 +36,7 @@ var FoodBase = {
     price: {
         type: Number,
         required: true,
-        min: [0, "Price ({VALUE}) ({VALUE}) should be greater than 0."],
+        min: [0, "Price ({VALUE}) should be greater than 0."],
         set: v => Math.round(v * 100) / 100,
         get: v => Math.round(v * 100) / 100
     },

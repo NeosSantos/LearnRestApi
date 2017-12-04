@@ -76,15 +76,14 @@ exports.updateContainer = (req, res, next) => {
             });
             return;
         }
-        for(var key in req.body) {
-            if(req.body.hasOwnproperty(key)){
-                container[key] = req.body[key];
-            }
-        }
-        res.json({
-            status: 0,
-            msg: res.__('Succeed'),
-            data: container
+        Object.assign(container, req.body);
+        container.increment();
+        container.save((_cnt) => {
+            res.json({
+                status: 0,
+                msg: res.__('Succeed'),
+                data: _cnt
+            });
         });
     });
 };

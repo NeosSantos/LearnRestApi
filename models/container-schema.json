@@ -35,20 +35,22 @@
       "description": "货柜的地理位置（经度，纬度）",
       "items": {
         "type": "number"
-      }
+      }, "examples": [
+        [20.1231, 32.1234231]
+      ]
+    },
+    "temperature": {
+      "type": "number",
+      "title": "Container temperature",
+      "min": -1,
+      "max": 30,
+      "description": "货柜箱温度",
+      "default": 10
     },
     "remark": {
       "type": "string",
       "title": "Remark",
       "description": "备注信息"
-    },
-    "temperature": {
-      "type": "number",
-      "title": "Container temperature",
-      "min": 12,
-      "max": 14,
-      "description": "货柜箱温度",
-      "default": ""
     },
     "boxes": {
       "type": "array",
@@ -63,12 +65,6 @@
             "type": "integer",
             "title": "Box ID",
             "description": "单元格ID"
-          },
-          "isEmpty": {
-            "type": "boolean",
-            "title": "Is Empty",
-            "description": "当前是否为空",
-            "default": true
           },
           "boxSize": {
             "type": "array",
@@ -86,6 +82,14 @@
                 50
               ]
             ]
+          },
+          "booked": {
+            "title": "Has been ordered",
+            "description": "此单元格是否在明，后天被预定, This value will be changed at middle night of each day. (shift the first item)",
+            "type": "array", 
+            "items": {
+              "type":"boolean"
+            }
           }
         }
       }
@@ -93,7 +97,7 @@
     "isFull": {
       "type": "boolean",
       "title": "Is container full?",
-      "description": "货柜是否已满",
+      "description": "明天货柜是否已满",
       "default": false
     }
   },

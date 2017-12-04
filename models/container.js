@@ -24,15 +24,25 @@ var ContainerSchema = new Schema({
     temperature: {
         type: Number,
         min: -10,
-        max: 100,
+        max: 30,
         default: 10
     },
+    remark: String,
     boxes: {
         type: [BoxSchema],
         select: false
-    },
-    isFull: Boolean
+    }
 }, serialize);
+
+ContainerSchema.virtual('isFull').get(function () {
+    let full = [true, true];
+    if(!this.boxes) return undefined;
+    this.boxes.forEach((box) => {
+        full[0] = full[0] && box.booked[0];
+        full[1] = full[1] && box.booked[1];
+    });
+    return full;
+});
 
 ContainerSchema.plugin(uniqueValidator, {message: '`{VALUE}` is taken!'});
 module.exports = mongoose.model('Container', ContainerSchema);
